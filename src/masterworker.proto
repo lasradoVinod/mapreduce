@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package masterworker;
+
+// Worker definition
+service MapReduceComm {
+  // Master asks the worker to do the work defined by the WorkDesc
+	rpc doWork (WorkDesc) returns (Reply) {}
+}
+
+// The request message containing the product_name
+message File {
+	string fileName = 1;
+	uint32 startPos = 2;
+	uint32 size = 3;
+}
+
+// The response message containing the list of product info
+message WorkDesc {
+	bool mapRED = 1;
+	uint32 numOpFiles = 2;
+	repeated File file = 3;
+	uint32 worker_id = 4;
+	string user_id = 5; 
+	string out_dir = 6;
+}
+
+message Reply {
+	repeated string file = 1; 
+}
